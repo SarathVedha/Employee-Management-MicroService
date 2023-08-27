@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: SERVICE-REGISTRY
+
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+
+server:
+  port: 8761
+
+management:
+  info:
+    env:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+info:
+  app:
+    name: SERVICE-REGISTRY
+    description: SERVICE-REGISTRY
+    version: v1.0
