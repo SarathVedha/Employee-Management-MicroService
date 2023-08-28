@@ -11,7 +11,7 @@ spring:
           uri: https://github.com/SarathVedha/config.git
           default-label: master
           clone-on-start: true
-          search-paths:
+          search-paths: # Search in this GitHub path
             - 'Properties'
           basedir: configs
 
