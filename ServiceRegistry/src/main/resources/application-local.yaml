@@ -1,0 +1,28 @@
+server:
+  port: 8761
+
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+
+management:
+  info:
+    env:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+info:
+  app:
+    name: SERVICE-REGISTRY
+    description: SERVICE-REGISTRY
+    environment: ${spring.profiles.active}
+    version: v1.0

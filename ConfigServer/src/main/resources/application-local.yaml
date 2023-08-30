@@ -1,0 +1,40 @@
+server:
+  port: 8888
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/SarathVedha/config.git
+          default-label: master
+          clone-on-start: true
+          search-paths: # Search in this GitHub path
+            - 'Properties'
+          basedir: configs
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+
+info:
+  app:
+    name: CONFIG-SERVER
+    description: CONFIG-SERVER
+    environment: ${spring.profiles.active}
+    version: v1.0

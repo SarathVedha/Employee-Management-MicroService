@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RefreshScope
+@RefreshScope  //config server enabled then using actuator/refresh or actuator/busrefresh to refresh this bean or class in spring app context
 @RestController
 @RequestMapping("/api/test")
 @Tag(name = "Config Server", description = "Testing Config Server")

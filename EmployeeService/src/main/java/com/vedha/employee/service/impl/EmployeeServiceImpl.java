@@ -8,6 +8,8 @@ import com.vedha.employee.exception.EmployeeException;
 import com.vedha.employee.repository.EmployeeRepository;
 import com.vedha.employee.service.DepartmentAPI;
 import com.vedha.employee.service.EmployeeService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -57,6 +59,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    //@CircuitBreaker(name = "${spring.application.name}", fallbackMethod = "getByEmployeeIdFallback")
+    @Retry(name = "${spring.application.name}", fallbackMethod = "getByEmployeeIdFallback")
     @Override
     public EmployeeResponseDTO getByEmployeeId(Long employeeId) {
 
@@ -80,6 +84,11 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new EmployeeException("Department Code Not Found : " + employeeDTO.getDepCode());
         }
 
+    }
+
+    public EmployeeResponseDTO getByEmployeeIdFallback(Long employeeId, Exception exception) {
+
+        throw new EmployeeException("Department Service Down, Failed To Fetch Employee : " + employeeId);
     }
 
     @Override
