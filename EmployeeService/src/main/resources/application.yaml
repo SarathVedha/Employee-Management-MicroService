@@ -1,6 +1,9 @@
 spring:
   application:
     name: EMPLOYEE-SERVICE
+  cloud:
+    config:
+      enabled: true
   config: # Get properties From Config Server
     import: optional:configserver:http://localhost:8888
   rabbitmq: # Rabbit MQ Configs

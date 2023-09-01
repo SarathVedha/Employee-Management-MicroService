@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/ConfigServer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/DepartmentService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/EmployeeService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OrganizationService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ServiceRegistry/src/main/java" charset="UTF-8" />
   </component>
 </project>

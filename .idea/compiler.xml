@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="OrganizationService" />
         <module name="DepartmentService" />
         <module name="ConfigServer" />
         <module name="ServiceRegistry" />
@@ -21,6 +22,7 @@
       <module name="ConfigServer" options="-parameters" />
       <module name="DepartmentService" options="-parameters" />
       <module name="EmployeeService" options="-parameters" />
+      <module name="OrganizationService" options="-parameters" />
       <module name="ServiceRegistry" options="-parameters" />
     </option>
   </component>

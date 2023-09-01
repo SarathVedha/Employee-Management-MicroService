@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/emp")
+@RequestMapping("/api/employees")
 @AllArgsConstructor
 @Tag(name = "Employee REST APIs", description = "Employee CURD REST APIs")
 public class EmployeeController {
@@ -25,7 +25,7 @@ public class EmployeeController {
 
     @Operation(summary = "Create Employee", description = "Create Employee In DataBase")
     @ApiResponse(responseCode = "201", description = "Http Status 201 Created")
-    @PostMapping(value = { "/save" },
+    @PostMapping(value = { "/v1/save" },
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
@@ -38,7 +38,7 @@ public class EmployeeController {
 
     @Operation(summary = "Get Employee By Id", description = "Get Employee By Id In DataBase")
     @ApiResponse(responseCode = "200", description = "Http Status 200 Ok")
-    @GetMapping(value = { "/getById" },
+    @GetMapping(value = { "/v1/getById" },
             consumes = { MediaType.ALL_VALUE },
             produces = { MediaType.APPLICATION_JSON_VALUE }
     )
@@ -51,7 +51,7 @@ public class EmployeeController {
 
     @Operation(summary = "Get All Employees", description = "Get All Employee In DataBase")
     @ApiResponse(responseCode = "200", description = "Http Status 200 Ok")
-    @GetMapping(value = { "/allEmp" },
+    @GetMapping(value = { "/v1/allEmp" },
             consumes = { MediaType.ALL_VALUE },
             produces = { MediaType.APPLICATION_JSON_VALUE }
     )

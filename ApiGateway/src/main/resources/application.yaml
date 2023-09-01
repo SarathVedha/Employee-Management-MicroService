@@ -1,6 +1,20 @@
 spring:
   application:
     name: API-GATEWAY
+  cloud:
+    config:
+      enabled: true
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000/"  #"*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+
   config:
     import: optional:configserver:http://localhost:8888
   rabbitmq:

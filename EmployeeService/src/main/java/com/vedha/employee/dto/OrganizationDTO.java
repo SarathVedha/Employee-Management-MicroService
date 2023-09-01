@@ -9,11 +9,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EmployeeResponseDTO {
+public class OrganizationDTO {
 
-    private EmployeeDTO employeeDTO;
+    private Long id;
 
-    private DepartmentDTO departmentDTO;
+    private String organizationName;
 
-    private OrganizationDTO organizationDTO;
+    private String organizationDescription;
+
+    private String organizationCode;
+
 }

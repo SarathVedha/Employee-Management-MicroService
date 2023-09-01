@@ -18,7 +18,12 @@ public class EmployeeEntity {
 
     private String employeeName;
 
+    @Column(nullable = false, unique = true)
     private String employeeEmail;
 
+    @Column(nullable = false)
     private String depCode;
+
+    @Column(nullable = false)
+    private String orgCode;
 }

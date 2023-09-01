@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "DEPARTMENT-SERVICE") // If Microservice Registered With Eureka we can use that application name
 public interface DepartmentAPI {
 
-    @GetMapping(value = { "/api/dep/getDepByCode" },
+    @GetMapping(value = { "/api/departments/v1/getDepByCode" },
             consumes = {MediaType.ALL_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )

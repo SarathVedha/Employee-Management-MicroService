@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/dep")
+@RequestMapping("/api/departments")
 @AllArgsConstructor
 @Tag(name = "Department REST APIs", description = "Department CURD REST APIs")
 public class DepartmentController {
@@ -23,7 +23,7 @@ public class DepartmentController {
 
     @Operation(summary = "Create Department", description = "Creates Department In DataBase")
     @ApiResponse(responseCode = "201", description = "Http Status 201 Created")
-    @PostMapping(value = { "/saveDep" },
+    @PostMapping(value = { "/v1/saveDep" },
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
@@ -36,7 +36,7 @@ public class DepartmentController {
 
     @Operation(summary = "Get Department By Code", description = "Get Department By Code In DataBase")
     @ApiResponse(responseCode = "200", description = "Http Status 200 Ok")
-    @GetMapping(value = { "/getDepByCode" },
+    @GetMapping(value = { "/v1/getDepByCode" },
             consumes = {MediaType.ALL_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
@@ -49,7 +49,7 @@ public class DepartmentController {
 
     @Operation(summary = "Get All Department", description = "Get All Department In DataBase")
     @ApiResponse(responseCode = "200", description = "Http Status 200 Ok")
-    @GetMapping(value = { "/getAllDep" },
+    @GetMapping(value = { "/v1/getAllDep" },
             consumes = {MediaType.ALL_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )

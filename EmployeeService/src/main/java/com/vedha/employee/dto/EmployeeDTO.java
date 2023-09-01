@@ -27,4 +27,8 @@ public class EmployeeDTO {
     @NotEmpty(message = "Department Code Should Not Be Empty")
     @Size(min = 5, max = 5, message = "Department Code Should Be 5 Chars")
     private String depCode;
+
+    @NotEmpty(message = "Organization Code Should Not Be Empty")
+    @Size(min = 5, max = 5, message = "Organization Code Should Be 5 Chars")
+    private String orgCode;
 }
