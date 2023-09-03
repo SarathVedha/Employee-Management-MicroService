@@ -40,7 +40,7 @@ public class GlobalExceptions {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException exception, WebRequest webRequest) {
+    public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException exception) {
 
         HashMap<String, String> errors = new HashMap<>();
 

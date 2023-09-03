@@ -10,6 +10,8 @@ management:
   info:
     env:
       enabled: true
+    java:
+      enabled: true
   endpoint:
     health:
       show-details: always
@@ -22,7 +24,8 @@ management:
 
 info:
   app:
-    name: SERVICE-REGISTRY
+    name: ${spring.application.name}
     description: SERVICE-REGISTRY
     environment: ${spring.profiles.active}
-    version: v1.0
+    version: '@project.version@' # Reading From Pom
+    spring-cloud-version: '@spring-cloud.version@'

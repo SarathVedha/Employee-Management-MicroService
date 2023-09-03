@@ -3,3 +3,5 @@ spring:
     name: ORGANIZATION-SERVICE
   profiles:
     active: local
+  config: # Get properties From Config Server
+    import: optional:configserver:http://localhost:8888

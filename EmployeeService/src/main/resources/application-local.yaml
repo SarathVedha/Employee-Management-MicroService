@@ -1,9 +1,9 @@
 server:
-  port: 8083
+  port: 8081
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost/organization_db
+    url: jdbc:postgresql://localhost/employee_db
     username: postgres
     password: Rockers12$
   jpa:
@@ -13,7 +13,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  rabbitmq:
+  rabbitmq: # Rabbit MQ Configs
     host: localhost
     port: 5672
     username: guest
@@ -24,21 +24,45 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
+# http://localhost:8080/employee-service/actuator/refresh
+test:
+  config:
+    server: Message From Properties Updated MQ Bus
+
+#Circuit Breaker Because Employee Service Depends On Department Service
+resilience4j:
+  circuitbreaker:
+    instances:
+      EMPLOYEE-SERVICE:
+        registerHealthIndicator: true
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 5s
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-type: count_based
+        sliding-window-size: 5
+  retry: # Circuit Breaker Retry if service down tries 3 times with gap 1s, if 3 times fails redirect to fallback method
+    instances:
+      EMPLOYEE-SERVICE:
+        max-attempts: 3
+        wait-duration: 1s
+
 management:
   endpoint:
     health:
       show-details: always
     shutdown:
       enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
   info:
     env:
       enabled: true
     java:
       enabled: true
-  endpoints:
-    web:
-      exposure:
-        include: "*"
   tracing: # Zipkin
     sampling: # Default value is 0.1 mean only 10% of the REST Calls will be traced. 1.0 Will trace each REST Call and get a display.
       probability: 1.0
@@ -58,7 +82,7 @@ logging:
 info:
   app:
     name: ${spring.application.name}
-    description: Organization Service Provides CURD REST APIs
+    description: Employee Service REST CURD APIs
     environment: ${spring.profiles.active}
     version: '@project.version@' # Reading From Pom
     spring-cloud-version: '@spring-cloud.version@'

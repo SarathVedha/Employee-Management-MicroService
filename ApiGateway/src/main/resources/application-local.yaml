@@ -1,0 +1,79 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator: # Spring Boot Creates Routes For Us To Eureka Server For Microservices and LoadBalancing, need to add service id in uri -> (http://host.docker.internal:8080/department-service/api/departments/v1/allDep)
+          enabled: true
+          lower-case-service-id: true # Service ID CaseSensitive Removal
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000/"  #"*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+#      routes: # Creating Manually Routes To Eureka Server For Microservices and LoadBalancing, no need to add service id in uri -> (http://host.docker.internal:8080/api/departments/v1/allDep)
+#        - id: EMPLOYEE-SERVICE # Service ID
+#          uri: lb://EMPLOYEE-SERVICE # Load Balance URL
+#            - predicates: # URI Path
+#            - Path=/api/employees/**
+#        - id: DEPARTMENT-SERVICE # Service ID
+#          uri: lb://DEPARTMENT-SERVICE # Load Balance URL
+#          predicates: # URI Path
+#            - Path=/api/departments/**
+#        - id: ORGANIZATION-SERVICE # Service ID
+#          uri: lb://ORGANIZATION-SERVICE # Load Balance URL
+#          predicates: # URI Path
+#            - Path=/api/organizations/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  info:
+    env:
+      enabled: true
+    java:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  tracing:
+    sampling: # Default value is 0.1 mean only 10% of the REST Calls will be traced. 1.0 Will trace each REST Call and get a display.
+      probability: 1.0
+  zipkin:
+    tracing: # ZipKin Will be Autoconfigured in this url(http://localhost:9411/api/v2/spans), custom means you can add.
+      endpoint: http://localhost:9411/api/v2/spans
+
+logging:
+  level:
+    org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping: DEBUG
+    org.springframework.web: DEBUG
+  pattern:
+    level: '%5p [${spring.application.name}, %X{traceId:-}, %X{spanId:-}]'
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: API-GATEWAY To ROUTES HTTP Calls to Eureka Server
+    environment: ${spring.profiles.active}
+    version: '@project.version@' # Reading From Pom
+    spring-cloud-version: '@spring-cloud.version@'
