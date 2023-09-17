@@ -28,7 +28,7 @@ management:
       enabled: true
     java:
       enabled: true
-    git:
+    os:
       enabled: true
   endpoint:
     shutdown:
