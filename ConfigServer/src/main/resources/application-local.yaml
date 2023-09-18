@@ -6,7 +6,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/SarathVedha/config.git
+          uri: https://github.com/SarathVedha/Employee-Management-MicroService-Configs.git
           default-label: master
           clone-on-start: true
           search-paths: # Search in this GitHub path
