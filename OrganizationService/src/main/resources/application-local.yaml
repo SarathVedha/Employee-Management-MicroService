@@ -47,9 +47,6 @@ management:
   zipkin:
     tracing: # ZipKin Will be Autoconfigured in this url(http://localhost:9411/api/v2/spans), custom means you can add.
       endpoint: http://localhost:9411/api/v2/spans
-  health: # For Circuit Breaker
-    circuitbreakers:
-      enabled: true
 
 logging:
   pattern:
