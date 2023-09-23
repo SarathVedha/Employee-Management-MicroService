@@ -1,32 +1,32 @@
 server:
-  port: 8083
+  port: 8082
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost/organization_db
-    username: postgres
-    password: Rockers12$
+    url: ${DEPARTMENT_SERVICE_DB_URL}
+    username: ${DEPARTMENT_SERVICE_DB_USERNAME}
+    password: ${DEPARTMENT_SERVICE_DB_PASSWORD}
   jpa:
+    show-sql: true
     hibernate:
       ddl-auto: update
-    show-sql: true
     properties:
       hibernate:
         format_sql: true
   boot:
     admin:
       client:
-        url: http://localhost:9090
+        url: ${ADMIN_SERVICE_URL}
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    host: ${RABBIT_MQ_URL}
+    port: ${RABBIT_MQ_PORT}
+    username: ${RABBIT_MQ_USERNAME}
+    password: ${RABBIT_MQ_PASSWORD}
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_SERVICE_URL}/eureka/
 
 management:
   endpoint:
@@ -34,6 +34,10 @@ management:
       show-details: always
     shutdown:
       enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
   info:
     env:
       enabled: true
@@ -41,16 +45,12 @@ management:
       enabled: true
     os:
       enabled: true
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  tracing: # Zipkin
+  tracing:
     sampling: # Default value is 0.1 mean only 10% of the REST Calls will be traced. 1.0 Will trace each REST Call and get a display.
       probability: 1.0
   zipkin:
     tracing: # ZipKin Will be Autoconfigured in this url(http://localhost:9411/api/v2/spans), custom means you can add.
-      endpoint: http://localhost:9411/api/v2/spans
+      endpoint: ${ZIPKIN_SERVER_URL}/api/v2/spans
 
 logging:
   pattern:
@@ -61,7 +61,7 @@ logging:
 info:
   app:
     name: ${spring.application.name}
-    description: Organization Service Provides CURD REST APIs
+    description: Department CURD REST APIs
     environment: ${spring.profiles.active}
     version: '@project.version@' # Reading From Pom
     spring-cloud-version: '@spring-cloud.version@'

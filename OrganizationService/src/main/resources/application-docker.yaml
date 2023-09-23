@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost/organization_db
-    username: postgres
-    password: Rockers12$
+    url: ${ORGANIZATION_SERVICE_DB_URL}
+    username: ${ORGANIZATION_SERVICE_DB_USERNAME}
+    password: ${ORGANIZATION_SERVICE_DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
@@ -16,17 +16,17 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:9090
+        url: ${ADMIN_SERVICE_URL}
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    host: ${RABBIT_MQ_URL}
+    port: ${RABBIT_MQ_PORT}
+    username: ${RABBIT_MQ_USERNAME}
+    password: ${RABBIT_MQ_PASSWORD}
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_SERVICE_URL}/eureka/
 
 management:
   endpoint:
@@ -50,7 +50,7 @@ management:
       probability: 1.0
   zipkin:
     tracing: # ZipKin Will be Autoconfigured in this url(http://localhost:9411/api/v2/spans), custom means you can add.
-      endpoint: http://localhost:9411/api/v2/spans
+      endpoint: ${ZIPKIN_SERVER_URL}/api/v2/spans
 
 logging:
   pattern:

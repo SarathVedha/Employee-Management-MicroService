@@ -2,4 +2,4 @@ spring:
   application:
     name: CONFIG-SERVER
   profiles:
-    active: local
+    active: ${CONFIG_APP_PROFILE}

@@ -5,7 +5,7 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:9090
+        url: ${ADMIN_SERVICE_URL}
   cloud:
     gateway:
       discovery:
@@ -15,17 +15,17 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOrigins: "http://localhost:3000/"  # For All Use"*", Known Server App URL you can Mention (React -> http://localhost:3000/)
+            allowedOrigins: "*"  # For All Use"*", Known Server App URL you can Mention (React -> http://localhost:3000/)
             allowedMethods:
               - GET
               - POST
               - PUT
               - DELETE
   rabbitmq: # RabbitMQ For Config Bus
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    host: ${RABBIT_MQ_URL}
+    port: ${RABBIT_MQ_PORT}
+    username: ${RABBIT_MQ_USERNAME}
+    password: ${RABBIT_MQ_PASSWORD}
 #      routes: # Creating Manually Routes To Eureka Server For Microservices and LoadBalancing, no need to add service id in uri -> (http://host.docker.internal:8080/api/departments/v1/allDep)
 #        - id: EMPLOYEE-SERVICE # Service ID
 #          uri: lb://EMPLOYEE-SERVICE # Load Balance URL
@@ -43,7 +43,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_SERVICE_URL}/eureka/
 
 management:
   info:
@@ -67,7 +67,7 @@ management:
       probability: 1.0
   zipkin:
     tracing: # ZipKin Will be Autoconfigured in this url(http://localhost:9411/api/v2/spans), custom means you can add.
-      endpoint: http://localhost:9411/api/v2/spans
+      endpoint: ${ZIPKIN_SERVER_URL}/api/v2/spans
 
 logging:
   level:

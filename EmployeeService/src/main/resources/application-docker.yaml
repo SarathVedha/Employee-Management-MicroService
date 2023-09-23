@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost/employee_db
-    username: postgres
-    password: Rockers12$
+    url: ${EMPLOYEE_SERVICE_DB_URL}
+    username: ${EMPLOYEE_SERVICE_DB_USERNAME}
+    password: ${EMPLOYEE_SERVICE_DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
@@ -16,17 +16,17 @@ spring:
   boot: # Spring Admin Server URL
     admin:
       client:
-        url: http://localhost:9090
+        url: ${ADMIN_SERVICE_URL}
   rabbitmq: # Rabbit MQ Configs
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    host: ${RABBIT_MQ_URL}
+    port: ${RABBIT_MQ_PORT}
+    username: ${RABBIT_MQ_USERNAME}
+    password: ${RABBIT_MQ_PASSWORD}
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_SERVICE_URL}/eureka/
 
 # http://localhost:8080/employee-service/actuator/refresh
 # http://localhost:8080/actuator/busrefresh
@@ -75,7 +75,7 @@ management:
       probability: 1.0
   zipkin:
     tracing: # ZipKin Will be Autoconfigured in this url(http://localhost:9411/api/v2/spans), custom means you can add.
-      endpoint: http://localhost:9411/api/v2/spans
+      endpoint: ${ZIPKIN_SERVER_URL}/api/v2/spans
   health: # For Circuit Breaker
     circuitbreakers:
       enabled: true

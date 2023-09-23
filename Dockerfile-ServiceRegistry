@@ -4,6 +4,6 @@ LABEL authors="Sarath"
 
 WORKDIR /app
 
-COPY target/ServiceRegistry-0.0.1-SNAPSHOT.jar /app/ServiceRegistry.jar
+COPY ServiceRegistry/target/ServiceRegistry-0.0.1-SNAPSHOT.jar /app/ServiceRegistry.jar
 
 ENTRYPOINT ["java", "-jar", "ServiceRegistry.jar"]

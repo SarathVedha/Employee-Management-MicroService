@@ -2,4 +2,4 @@ spring:
   application:
     name: ADMIN-SERVICE
   profiles:
-    active: local
+    active: ${ADMIN_APP_PROFILE}

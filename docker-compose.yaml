@@ -1,0 +1,121 @@
+version: "3.8"
+
+networks:
+  bridge-net:
+    name: employee-management-microservice-app-net
+
+services:
+  postgres-db:
+    container_name: postgres-db-app
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+    networks:
+      bridge-net:
+
+  adminer-db:
+    container_name: adminer-db-app
+    image: adminer:latest
+    ports:
+      - "9080:8080"
+    links:
+      - postgres-db
+    networks:
+      bridge-net:
+
+  rabbit-mq:
+    container_name: rabbit-mq-management
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      bridge-net:
+
+  zipkin:
+    container_name: zipkin-app
+    image: openzipkin/zipkin:latest
+    ports:
+      - "9411:9411"
+    networks:
+      bridge-net:
+
+  admin-service:
+    container_name: admin-service-app
+    build:
+      context: .
+      dockerfile: Dockerfile-AdminService
+    ports:
+      - "9090:9090"
+    environment:
+      ADMIN_APP_PROFILE: docker
+    networks:
+      bridge-net:
+    restart: on-failure
+
+  eureka-service:
+    container_name: eureka-service-app
+    build:
+      context: .
+      dockerfile: Dockerfile-ServiceRegistry
+    ports:
+      - "8761:8761"
+    links:
+      - admin-service
+    environment:
+      EUREKA_SERVICE_APP_PROFILE: docker
+      ADMIN_SERVICE_URL: http://admin-service:9090
+    networks:
+      bridge-net:
+    restart: on-failure
+
+  config-service:
+    container_name: config-service-app
+    build:
+      context: .
+      dockerfile: Dockerfile-ConfigServer
+    ports:
+      - "8888:8888"
+    links:
+      - admin-service
+      - eureka-service
+    environment:
+      CONFIG_APP_PROFILE: docker
+      ADMIN_SERVICE_URL: http://admin-service:9090
+      EUREKA_SERVICE_URL: http://eureka-service:8761
+      CONFIG_GIT_URL: https://github.com/SarathVedha/Employee-Management-MicroService-Configs.git
+    networks:
+      bridge-net:
+    restart: on-failure
+
+  api-gateway-service:
+    container_name: api-gateway-service-app
+    build:
+      context: .
+      dockerfile: Dockerfile-ApiGateWayService
+    ports:
+      - "8080:8080"
+    links:
+      - admin-service
+      - config-service
+      - eureka-service
+      - rabbit-mq
+      - zipkin
+    environment:
+      API_GATEWAY_APP_PROFILE: docker
+      CONFIG_SERVICE_URL: http://config-service:8888
+      ADMIN_SERVICE_URL: http://admin-service:9090
+      EUREKA_SERVICE_URL: http://eureka-service:8761
+      ZIPKIN_SERVER_URL: http://zipkin:9411
+      RABBIT_MQ_URL: rabbit-mq
+      RABBIT_MQ_PORT: 5672
+      RABBIT_MQ_USERNAME: guest
+      RABBIT_MQ_PASSWORD: guest
+    networks:
+      bridge-net:
+    restart: on-failure

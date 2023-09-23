@@ -2,4 +2,4 @@ spring:
   application:
     name: SERVICE-REGISTRY
   profiles:
-    active: local
+    active: ${EUREKA_SERVICE_APP_PROFILE}

@@ -1,6 +1,6 @@
 FROM eclipse-temurin:17
 
-LABEL authors="sarath"
+LABEL authors="Sarath"
 
 WORKDIR /app
 
