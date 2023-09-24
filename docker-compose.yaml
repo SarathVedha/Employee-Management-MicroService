@@ -93,6 +93,7 @@ services:
       bridge-net:
     restart: on-failure
 
+#Note Config Server Takes Time To Start So Restart Dependent Services
   api-gateway-service:
     container_name: api-gateway-service-app
     build:
@@ -116,6 +117,99 @@ services:
       RABBIT_MQ_PORT: 5672
       RABBIT_MQ_USERNAME: guest
       RABBIT_MQ_PASSWORD: guest
+    networks:
+      bridge-net:
+    restart: on-failure
+
+  employee-service:
+    container_name: employee-service-app
+    build:
+      context: .
+      dockerfile: Dockerfile-EmployeeService
+    ports:
+      - "8081:8081"
+    links:
+      - admin-service
+      - config-service
+      - eureka-service
+      - rabbit-mq
+      - zipkin
+      - api-gateway-service
+    environment:
+      EMPLOYEE_APP_PROFILE: docker
+      CONFIG_SERVICE_URL: http://config-service:8888
+      ADMIN_SERVICE_URL: http://admin-service:9090
+      EUREKA_SERVICE_URL: http://eureka-service:8761
+      ZIPKIN_SERVER_URL: http://zipkin:9411
+      RABBIT_MQ_URL: rabbit-mq
+      RABBIT_MQ_PORT: 5672
+      RABBIT_MQ_USERNAME: guest
+      RABBIT_MQ_PASSWORD: guest
+      EMPLOYEE_SERVICE_DB_URL: jdbc:postgresql://postgres-db/employee_db
+      EMPLOYEE_SERVICE_DB_USERNAME: postgres
+      EMPLOYEE_SERVICE_DB_PASSWORD: postgres
+    networks:
+      bridge-net:
+    restart: on-failure
+
+  department-service:
+    container_name: department-service-app
+    build:
+      context: .
+      dockerfile: Dockerfile-DepartmentService
+    ports:
+      - "8082:8082"
+    links:
+      - admin-service
+      - config-service
+      - eureka-service
+      - rabbit-mq
+      - zipkin
+      - api-gateway-service
+    environment:
+      DEPARTMENT_APP_PROFILE: docker
+      CONFIG_SERVICE_URL: http://config-service:8888
+      ADMIN_SERVICE_URL: http://admin-service:9090
+      EUREKA_SERVICE_URL: http://eureka-service:8761
+      ZIPKIN_SERVER_URL: http://zipkin:9411
+      RABBIT_MQ_URL: rabbit-mq
+      RABBIT_MQ_PORT: 5672
+      RABBIT_MQ_USERNAME: guest
+      RABBIT_MQ_PASSWORD: guest
+      DEPARTMENT_SERVICE_DB_URL: jdbc:postgresql://postgres-db/department_db
+      DEPARTMENT_SERVICE_DB_USERNAME: postgres
+      DEPARTMENT_SERVICE_DB_PASSWORD: postgres
+    networks:
+      bridge-net:
+    restart: on-failure
+
+  organization-service:
+    container_name: organization-service-app
+    build:
+      context: .
+      dockerfile: Dockerfile-OrganizationService
+    ports:
+      - "8083:8083"
+    links:
+      - admin-service
+      - config-service
+      - eureka-service
+      - rabbit-mq
+      - zipkin
+      - api-gateway-service
+    environment:
+      ORGANIZATION_APP_PROFILE: docker
+      CONFIG_SERVICE_URL: http://config-service:8888
+      ADMIN_SERVICE_URL: http://admin-service:9090
+      EUREKA_SERVICE_URL: http://eureka-service:8761
+      ZIPKIN_SERVER_URL: http://zipkin:9411
+      RABBIT_MQ_URL: rabbit-mq
+      RABBIT_MQ_PORT: 5672
+      RABBIT_MQ_USERNAME: guest
+      RABBIT_MQ_PASSWORD: guest
+      ORGANIZATION_SERVICE_DB_URL: jdbc:postgresql://postgres-db/organization_db
+      ORGANIZATION_SERVICE_DB_USERNAME: postgres
+      ORGANIZATION_SERVICE_DB_PASSWORD: postgres
     networks:
       bridge-net:
     restart: on-failure

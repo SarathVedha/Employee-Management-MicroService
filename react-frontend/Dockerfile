@@ -1,6 +1,6 @@
 FROM node:latest
 
-LABEL authors="sarath"
+LABEL authors="Sarath"
 
 WORKDIR /app
 
